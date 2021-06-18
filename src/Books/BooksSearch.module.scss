@@ -1,0 +1,28 @@
+.Container {
+    background-color: #26A9E0;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Button {
+    background-color: #1B75BB;
+    border: 1px solid #1B75BB;
+    color: #fff;
+    outline-style: none;
+    width: 68px;
+    height: 40px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.Input {
+    height: 40px;
+    width: 487px;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 5px 0 0 5px;
+}
