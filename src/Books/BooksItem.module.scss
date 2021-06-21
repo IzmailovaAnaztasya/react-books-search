@@ -1,0 +1,33 @@
+.Container {
+    width: 555px;
+    display: flex;
+    //flex-direction: column;
+    border-top: 1px solid #DAD1D1;
+    padding: 20px 0;
+}
+
+.Photo {
+    margin: 0 50px 0 0;
+    height: 190px;
+    width: 120px;
+}
+
+.Text {
+    margin: 0;
+
+    h2 {
+        font-size: 18px;
+        line-height: 23px
+    }
+}
+
+.AuthorLabel {
+    color: #808080;
+    font-size: 16px;
+    line-height: 21px;
+}
+.Author {
+    color: #B2B2B2;
+    font-size: 16px;
+    line-height: 21px;
+}
