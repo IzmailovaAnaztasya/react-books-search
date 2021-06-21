@@ -10,12 +10,12 @@ export default function BooksItem({book}) {
                 </span>
             </div>
             <div className={styles.Text}>
-                <h2>Название книги {book.name}</h2>
+                <h2>{book.title}</h2>
                 <div>
                     <span className={styles.AuthorLabel}>
                         Автор: </span>
                     <span className={styles.Author}>
-                        Автор Книги</span>
+                        {book.author_name}</span>
                 </div>
             </div>
             

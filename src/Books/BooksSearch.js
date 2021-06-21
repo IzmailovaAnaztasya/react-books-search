@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+// import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import BooksList from './BooksList'
 import Loader from '../Loader'
 import styles from './BooksSearch.module.scss'
@@ -9,22 +10,26 @@ function BooksSearch() {
         {name: 2},
         {name: 3},
         {name: 4},
-    ]
+    ]   
     const [value, setValue] = useState('')
-    const [data, setData] = useState('')
-    const [loading] = useState(true)
+    const [loading] = useState(false)
+    // const [data, setData] = useState('')
+    // useEffect(() => {
+    //   fetch("http://openlibrary.org/search.json?author=tolkien").then((response) => response.json()).then((data) => setData(data));
+    //   console.log(data);
+    // }, [])
+    // const booksArr = data.docs
 
-    useEffect(() => {
-      fetch("http://openlibrary.org/search.json?author=tolkien").then((response) => response.json()).then((data) => setData(data));
-  
-      console.log(data);
-    }, [])
-
-    function submitSearch(event) {
+    async function submitSearch(event) {
         event.preventDefault()
-        if (value.trim()) {
-            console.log(value);
-        }
+        // if (value.trim()) {
+        //     console.log(value);
+        // }
+        const booksTitle = value.replace(' ', '+')
+        const resalt = await fetch(`http://openlibrary.org/search.json?title=${booksTitle}`)
+        const resData = await resalt.json()
+        console.log(resData);
+        //console.log(value);
     }
 
     return (
