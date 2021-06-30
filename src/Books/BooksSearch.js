@@ -1,53 +1,52 @@
-// import React, {useState, useEffect} from 'react'
-import React, {useState} from 'react'
-import BooksList from './BooksList'
-import Loader from '../Loader'
-import styles from './BooksSearch.module.scss'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import BooksList from './BooksList';
+import Loader from '../Loader';
+import styles from './BooksSearch.module.scss';
+import useDebounce from '../hooks/useDebounced';
 
 function BooksSearch() {
-    const booksArr = [
-        {name: 1},
-        {name: 2},
-        {name: 3},
-        {name: 4},
-    ]   
-    const [value, setValue] = useState('')
-    const [loading] = useState(false)
-    // const [data, setData] = useState('')
-    // useEffect(() => {
-    //   fetch("http://openlibrary.org/search.json?author=tolkien").then((response) => response.json()).then((data) => setData(data));
-    //   console.log(data);
-    // }, [])
-    // const booksArr = data.docs
+  const booksArr = [{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }];
+  const [data, setData] = useState([])
+  const [value, setValue] = useState('');
+  const debouncedValue = useDebounce(value,2000)
+  const [loading, setLoading] = useState(false);
 
-    async function submitSearch(event) {
-        event.preventDefault()
-        // if (value.trim()) {
-        //     console.log(value);
-        // }
-        const booksTitle = value.replace(' ', '+')
-        const resalt = await fetch(`http://openlibrary.org/search.json?title=${booksTitle}`)
-        const resData = await resalt.json()
-        console.log(resData);
-        //console.log(value);
-    }
+  async function fetchBooks() {
+      setLoading(true)
+    const result = await axios.get('http://openlibrary.org/search.json', {
+      params: {
+        title: debouncedValue,
+      },
+  });
+  console.log(result);
+  setLoading(false)
+    
+  }
+  useEffect(() => {
+    if (!debouncedValue || loading) return;
+    fetchBooks()
+  }, [debouncedValue]);
 
-    return (
-        <form onSubmit={submitSearch}>
-            <div className={styles.Container}>
-                <input className={styles.Input} placeholder="Поиск книги..." value={value} onChange={event => setValue(event.target.value)} />
-                <button type="submit" className={styles.Button}>
-                <span className="material-icons-outlined">
-                    search
-                </span>
-                </button>
-            </div>
-            {loading && <Loader />}
-            <div>
-                <BooksList books={booksArr} />
-            </div>
-        </form>
-    )
+  return (
+    <>
+      <div className={styles.Container}>
+        <input
+          className={styles.Input}
+          placeholder='Поиск книги...'
+          
+          onChange={(event) => setValue(event.target.value)}
+        />
+        <button onClick={()=>fetchBooks()} className={styles.Button}>
+          <span className='material-icons-outlined'>search</span>
+        </button>
+      </div>
+      {loading && <Loader />}
+      <div>
+        <BooksList books={booksArr} a={"hueta"} />
+      </div>
+    </>
+  );
 }
 
 export default BooksSearch;
